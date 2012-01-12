@@ -1,0 +1,181 @@
+﻿@model MyNokatMVC3.ViewModels.JokesFeedViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div>
+@Html.Hidden("UserId", Model.UserId)
+@Html.Hidden("UserName", Model.UserName)
+
+
+</div>
+
+
+<div id="main">
+    <div id="msg_post">
+                 <table>
+                 <tr>
+                 <td rowspan="2" valign="top"><img alt="" src='https://graph.facebook.com/@Model.UserId/picture'  /></td>
+                 <td colspan="2">@Html.ActionLink(@Model.UserName, null, "User", new { id = @Model.UserId }, null)</td>
+                 </tr>
+                 <tr><td valign="top">  
+                 <textarea id="message_wall" class="msg_txt" rows="3" cols="20"></textarea>                
+                 </td>
+                 <td><input type="button" id="submit_wall" value="Post" class="btn" /></td></tr>
+                 </table>  
+
+    </div>
+
+    <ul id="holder">
+        @{
+            foreach (var item in Model.Jokes)
+            {    
+          
+            <li id="@item.JokeId">
+             <table class="tbl_posts" style="width:500;">
+             <tr>
+             <td rowspan="3" valign="top"><img alt="" src='https://graph.facebook.com/@item.UserId/picture'  /></td>
+             <td colspan="4">@Html.ActionLink(@item.UserName, null, "User", new { id = @item.UserId }, null)</td>
+             </tr>
+             <tr><td colspan="4">@item.Joke</td></tr>
+             <tr>
+             <td ><span class="upCount">@item.UpVotesCount</span>
+             @if(@item.UserVoteType == "true"){
+                 <input type="button" class="btnup" onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' disabled="disabled"  />
+             }
+             else{
+                 <input type="button" class="btnup"  onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' /> 
+             }
+
+             <span>.</span></td>
+             <td>@item.DownVotesCount 
+             @if(@item.UserVoteType == "true"){
+                 <input type="button" id='down@item.JokeId' class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' disabled="disabled"  />
+             }
+             else{
+                 <input type="button" id='down@item.JokeId' class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' /> 
+             }
+             
+             <span>.</span></td>
+             <td><input type="button" id="Share_Joke" value="Share" onclick='postToFeed("@item.Joke");' class="btn" />
+             </td>
+             <td><span>At:</span>@item.AddDate<span>.</span></td></tr>
+             </table>               
+
+            </li>
+            }
+        }
+    </ul>
+</div>
+<script type="text/javascript">
+    function SaveUserVote(userId, jokeid, vote) {
+        //alert($('#' + jokeid
+
+        
+
+        $.ajax(
+    {
+        type: "POST",
+        url: "/User/VoteToJoke",
+        data: { 'pUserId': userId, 'pJokeId': jokeid, 'pVoteType': vote },
+        success: function (result) {
+            if (result.toString = "Success") {
+                if (vote == "true") {
+                    var upCount = $('#' + jokeid).find('.upCount');
+                    var count = parseInt($(upCount).html());
+                    $(upCount).text(count + 1);
+
+                    $('#' + jokeid).find('.btnup').attr("disabled") = 'disabled';
+                    $('#' + jokeid).find('.btnDown').attr("disabled") = '';
+                }
+                else if (vote == "false") {
+                    var upCount = $('#' + jokeid).find('.DownCount');
+                    var count = parseInt($(upCount).html());
+                    $(upCount).text(count - 1);
+
+                    $('#' + jokeid).find('.btnup').attr("disabled") = '';
+                    $('#' + jokeid).find('.btnDown') = 'disabled';
+
+                }
+
+            }
+        },
+        error: function (req, status, error) {
+            alert("Sorry! Error occured in adding the vote\r\nTry again later");
+        }
+    });
+
+
+    }
+
+    $(document).ready(function () {
+
+        $('#holder').sweetPages({ perPage: 5 });
+
+        var controls = $('.swControls').detach();
+        controls.appendTo('#main');
+
+        var userId = $('#UserId').attr('value');
+
+
+        $("#submit_wall").click(function () {
+
+            var message_wall = $('#message_wall').attr('value');
+
+
+            $.ajax(
+    {
+        type: "POST",
+        url: "/User/PostJoke",
+        data: { 'pUserId': userId, 'pJoke': message_wall },
+        success: function (result) {
+            if (result.toString = "Success") {
+                var newElement = '<li><table><tr><td rowspan="3" valign="top"><img alt="" src="https://graph.facebook.com/@Model.UserId/picture"  /></td><td>@Html.ActionLink(@Model.UserName, null, "User", new { id = @Model.UserId }, null)</td></tr><tr><td>' + message_wall + '</td></tr><tr><td>Now <span>.</span><span> 0</span><input id="btnUp" type="button"  class="btn" /></div><span>.</span><span> 0</span><input id="btnDown" type="button"  class="btn"/><input type="button" id="Share_Joke" value="Share" onclick=\'postToFeed("'+ message_wall +'");\' class="btn" /></td></tr></table></li>'
+                $(newElement).insertBefore($("#holder li:first-child"));
+            }
+        },
+        error: function (req, status, error) {
+            alert("Sorry! We could not receive your feedback at this time.");
+        }
+    });
+
+            //    $("#thiId").click(function () {
+            //                alert("123");
+            //                if ($(this).hasClass("clsUpButton") || $(this).hasClass("clsDownButton")) {
+            //                    alert("hasclass");
+            //                    var trid = $(this).closest('tr').attr('id');
+            //                    var VoteType = $(this).hasClass("clsUpButton");
+            //                    alert(trid);
+            //                }
+            //                $.ajax(
+            //    {
+            //        type: "POST",
+            //        url: "/User/JokeVote",
+            //        data: { 'pUserId': userId, 'pJokeId': trid, 'pVoteType': '1' },
+            //        success: function (result) {
+            //            if (result.toString = "Success") {
+            //                $(this).att('diabled', 'diabled');
+            //                if (VoteType = $(this).hasClass("clsUpButton")) {
+            //                    $(this).closest('tr').find('.clsDownButton').attr('diabled', '');
+            //                }
+            //                else {
+            //                    $(this).closest('tr').find('.clsUpButton').attr('diabled', '');
+            //                }
+            //            }
+            //            //if(result.success) $("#feedback input").attr("value", ""); // clear all the input fields on success        
+            //        },
+            //        error: function (req, status, error) {
+            //            alert("Sorry! We could not receive your feedback at this time.");
+            //        }
+            //    });
+            //            });
+        });
+
+
+    });
+
+
+
+</script>

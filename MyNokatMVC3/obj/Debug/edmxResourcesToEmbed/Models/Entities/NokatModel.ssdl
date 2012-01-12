@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NokatModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="NokatModelStoreContainer">
+    <EntitySet Name="Jokes" EntityType="NokatModel.Store.Jokes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Votes" EntityType="NokatModel.Store.Votes" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Votes_Jokes" Association="NokatModel.Store.FK_Votes_Jokes">
+      <End Role="Jokes" EntitySet="Jokes" />
+      <End Role="Votes" EntitySet="Votes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Jokes">
+    <Key>
+      <PropertyRef Name="JokeId" />
+    </Key>
+    <Property Name="JokeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="Joke" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="AddDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Votes">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JokeId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="VoteType" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Votes_Jokes">
+    <End Role="Jokes" Type="NokatModel.Store.Jokes" Multiplicity="1" />
+    <End Role="Votes" Type="NokatModel.Store.Votes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jokes">
+        <PropertyRef Name="JokeId" />
+      </Principal>
+      <Dependent Role="Votes">
+        <PropertyRef Name="JokeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
