@@ -43,34 +43,8 @@ namespace MyNokatMVC3.Controllers
                 }
                 model.Jokes = allJokes;
             }
+
             return View(model);
-        }
-
-        [FacebookAuthorize(LoginUrl = "/Account/Login")]
-        public ActionResult Profile()
-        {
-            var client = new FacebookWebClient();
-
-            dynamic me = client.Get("me");
-            ViewBag.Name = me.name;
-            ViewBag.Id = me.id;
-
-            return View();
-        }
-
-
-        [HttpPost]
-        public string PostJoke(int pUserId, string pJoke)
-        {
-            IJokesRepository jokeRep = new JokesRepository();
-            if (jokeRep.AddJoke(pUserId, pJoke))
-            {
-                return "Success";
-            }
-            else
-            {
-                return "Failure";
-            }
         }
 
     }

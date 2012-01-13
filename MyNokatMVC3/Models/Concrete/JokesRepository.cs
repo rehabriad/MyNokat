@@ -37,7 +37,7 @@ namespace MyNokatMVC3.Models.Concrete
                     container = new NokatModelContainer();
                 }
 
-                var retJokes = container.Jokes.Where(i=>i.UserId==pUserId).AsQueryable<Jokes>();
+                var retJokes = container.Jokes.Where(i => i.UserId == pUserId).OrderByDescending(i => i.AddDate).AsQueryable<Jokes>();
                 return retJokes;
             }
             catch
@@ -47,9 +47,9 @@ namespace MyNokatMVC3.Models.Concrete
         }
 
 
-        public bool AddJoke(int pUserId, string pJoke)
+        public int AddJoke(int pUserId, string pJoke)
         {
-            bool ret = false;
+            int ret = 0;
             try
             {
                 if (container == null)
@@ -57,13 +57,15 @@ namespace MyNokatMVC3.Models.Concrete
                     container = new NokatModelContainer();
                 }
 
-                container.AddToJokes(new Jokes() { UserId = pUserId, Joke = pJoke, AddDate=DateTime.Now });
+                Jokes newJoke = new Jokes(){ UserId = pUserId, Joke = pJoke, AddDate=DateTime.Now };
+
+                container.AddToJokes(newJoke);
                 container.SaveChanges();
-                ret = true;
+                ret = newJoke.JokeId;
             }
             catch
             {
-                ret = false;
+                ret = 0;
             }
             return ret;
         }

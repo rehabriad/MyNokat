@@ -1,16 +1,9 @@
-﻿@{
-    Layout = null;
+﻿@model MyNokatMVC3.ViewModels.JokesFeedViewModel
+@{
+    ViewBag.Title = "MyNokat Home Page";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Index</title>
-</head>
-<body>
-    <div>
-        
-    </div>
-</body>
-</html>
+<div class="main">
+    
+    @Html.Partial("PostsMain",Model)
+</div>

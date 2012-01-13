@@ -1,0 +1,113 @@
+﻿@model MyNokatMVC3.ViewModels.JokesFeedViewModel
+@{
+    ViewBag.Title = ViewBag.Name;
+}
+
+
+    <ul class="holder">
+        @{
+            foreach (var item in Model.Jokes)
+            {    
+          
+            <li id="@item.JokeId">
+              <div class="VoteType" style="display: none">@item.UserVoteType</div>
+             <table class="tblFiveCols">
+             <tr>
+             <td rowspan="3" valign="top"><img alt="" src='https://graph.facebook.com/@item.UserId/picture'  /></td>
+             <td colspan="4">@Html.ActionLink(@item.UserName, null, "User", new { id = @item.UserId }, null)</td>
+             </tr>
+             <tr><td colspan="4">@item.Joke</td></tr>
+             <tr>
+             <td><span class="UpCount">@item.UpVotesCount</span>
+             @if (@item.UserVoteType == "True")
+             {
+                 <input type="button" class="btnup" onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' disabled="disabled"  />
+             }
+             else
+             {
+                 <input type="button" class="btnup"  onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' /> 
+             }
+
+             <span>.</span></td>
+             <td><span class="DownCount">@item.DownVotesCount</span>
+             @if (@item.UserVoteType == "False")
+             {
+                 <input type="button" class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' disabled="disabled"  />
+             }
+             else
+             {
+                 <input type="button" class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' /> 
+             }
+             
+             <span>.</span></td>
+             <td><input type="button" id="Share_Joke" value="Share" onclick='postToFeed("@item.Joke");' class="btn" />
+             </td>
+             <td><span>At:</span>@item.AddDate<span>.</span></td></tr>
+             </table>               
+
+            </li>
+            }
+        }
+    </ul>
+
+<script type="text/javascript">
+    function SaveUserVote(userId, jokeid, vote) {
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "/User/VoteToJoke",
+                data: { 'pUserId': userId, 'pJokeId': jokeid, 'pVoteType': vote },
+                success: function (result) {
+                    if (result.toString = "Success") {
+                        var prevVote = $("#" + jokeid).find(".VoteType").html();
+                        if (vote == "true") {
+                            $("#" + jokeid).find(".btnup").attr("disabled", 'disabled');
+                            $("#" + jokeid).find(".btnDown").removeAttr("disabled");
+
+                            var upCount = parseInt($("#" + jokeid).find(".UpCount").html());
+                            $("#" + jokeid).find(".UpCount").text(upCount + 1);
+
+                            $("#" + jokeid).find(".VoteType").text("True");
+                            if (prevVote == "False") {
+                                var downCount = parseInt($("#" + jokeid).find(".DownCount").html());
+                                $("#" + jokeid).find(".DownCount").text(downCount - 1);
+                            }
+                        }
+                        else if (vote == "false") {
+                            $("#" + jokeid).find(".btnup").removeAttr("disabled");
+                            $("#" + jokeid).find(".btnDown").attr("disabled", 'disabled');
+
+                            var downCount = parseInt($("#" + jokeid).find(".DownCount").html());
+                            $("#" + jokeid).find(".DownCount").text(downCount + 1);
+
+                            $("#" + jokeid).find(".VoteType").text("False");
+
+                            if (prevVote == "True") {
+                                var upCount = parseInt($("#" + jokeid).find(".UpCount").html());
+                                $("#" + jokeid).find(".UpCount").text(upCount - 1);
+                            }
+                        }
+
+
+                    }
+                },
+                error: function (req, status, error) {
+                    alert("Sorry! Vote Cannot be saved now..");
+                }
+            });
+
+    }
+
+    $(document).ready(function () {
+
+        $('.holder').sweetPages({ perPage: 5 });
+
+        var controls = $('.swControls').detach();
+        controls.appendTo('.main');
+
+    });
+
+
+
+</script>

@@ -10,6 +10,6 @@ namespace MyNokatMVC3.Models.Abstract
     {
         IQueryable<Jokes> GetAllJokesByDate();
         IQueryable<Jokes> GetJokesByUserId(int pUserId);
-        bool AddJoke(int pUserId,string pJoke);
+        int AddJoke(int pUserId,string pJoke);
     }
 }
