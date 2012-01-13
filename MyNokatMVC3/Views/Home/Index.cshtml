@@ -11,6 +11,10 @@
 
 
 </div>
+@*
+<input type="text" id="message_wall"/>
+<input type="submit"  id="submit_wall" name="Post"/>
+*@
 
 
 <div id="main">
@@ -33,7 +37,7 @@
             foreach (var item in Model.Jokes)
             {    
           
-            <li id="@item.JokeId">
+            <li>
              <table class="tbl_posts" style="width:500;">
              <tr>
              <td rowspan="3" valign="top"><img alt="" src='https://graph.facebook.com/@item.UserId/picture'  /></td>
@@ -41,21 +45,21 @@
              </tr>
              <tr><td colspan="4">@item.Joke</td></tr>
              <tr>
-             <td ><span class="upCount">@item.UpVotesCount</span>
+             <td>@item.UpVotesCount 
              @if(@item.UserVoteType == "true"){
-                 <input type="button" class="btnup" onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' disabled="disabled"  />
+                 <input type="button" name="btnUp" class="btnup" disabled="disabled"  />
              }
              else{
-                 <input type="button" class="btnup"  onclick='SaveUserVote("@item.UserId","@item.JokeId","true");' /> 
+                 <input type="button" name="btnUp" class="btnup"  onclick='SaveUserVote("@item.UserId","@item.JokeId","1");' /> 
              }
 
              <span>.</span></td>
              <td>@item.DownVotesCount 
              @if(@item.UserVoteType == "true"){
-                 <input type="button" id='down@item.JokeId' class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' disabled="disabled"  />
+                 <input type="button" name="btnDown" class="btnDown" disabled="disabled"  />
              }
              else{
-                 <input type="button" id='down@item.JokeId' class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","false");' /> 
+                 <input type="button" name="btnDown" class="btnDown" onclick='SaveUserVote("@item.UserId","@item.JokeId","0");' /> 
              }
              
              <span>.</span></td>
@@ -71,41 +75,11 @@
 </div>
 <script type="text/javascript">
     function SaveUserVote(userId, jokeid, vote) {
-        //alert($('#' + jokeid
+        alert(jokeid);
+        alert(vote);
 
-        
 
-        $.ajax(
-    {
-        type: "POST",
-        url: "/User/VoteToJoke",
-        data: { 'pUserId': userId, 'pJokeId': jokeid, 'pVoteType': vote },
-        success: function (result) {
-            if (result.toString = "Success") {
-                if (vote == "true") {
-                    var upCount = $('#' + jokeid).find('.upCount');
-                    var count = parseInt($(upCount).html());
-                    $(upCount).text(count + 1);
-
-                    $('#' + jokeid).find('.btnup').attr("disabled") = 'disabled';
-                    $('#' + jokeid).find('.btnDown').attr("disabled") = '';
-                }
-                else if (vote == "false") {
-                    var upCount = $('#' + jokeid).find('.DownCount');
-                    var count = parseInt($(upCount).html());
-                    $(upCount).text(count - 1);
-
-                    $('#' + jokeid).find('.btnup').attr("disabled") = '';
-                    $('#' + jokeid).find('.btnDown') = 'disabled';
-
-                }
-
-            }
-        },
-        error: function (req, status, error) {
-            alert("Sorry! Error occured in adding the vote\r\nTry again later");
-        }
-    });
+//        if(vote!=voteType)
 
 
     }
@@ -119,6 +93,10 @@
 
         var userId = $('#UserId').attr('value');
 
+//        $("#Share_Joke").click(function () {
+//            var message_wall = $('#message_wall').attr('value');
+//            postToFeed(message_wall);
+//        });
 
         $("#submit_wall").click(function () {
 
