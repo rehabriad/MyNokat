@@ -22,19 +22,13 @@ namespace MyNokatMVC3
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-            "VoteToJoke", // Route name
-            "User/VoteToJoke/{id}/{joke}", // URL with parameters
-            new { controller = "User", action = "VoteToJoke", id = UrlParameter.Optional, joke = UrlParameter.Optional } // Parameter defaults
-            );
-
-            routes.MapRoute(
-            "PostJoke", // Route name
-            "User/PostJoke/{id}/{joke}", // URL with parameters
+            "User", // Route name
+            "User/{id}/{joke}", // URL with parameters
             new { controller = "User", action = "PostJoke", id = UrlParameter.Optional, joke = UrlParameter.Optional } // Parameter defaults
             );
 
             routes.MapRoute(
-            "User", // Route name
+            "PostJoke", // Route name
             "User/{id}", // URL with parameters
             new { controller = "User", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
