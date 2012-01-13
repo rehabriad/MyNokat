@@ -40,7 +40,7 @@ namespace MyNokatMVC3.Controllers
 
         public ActionResult LogOn(string returnUrl)
         {
-            string redirectUrl = "http://" + Request.Url.Host + ":" + Request.Url.Port + "/Account/OAuth/";
+            string redirectUrl = "http://" + Request.Url.Host + "/Account/OAuth/";
             var oAuthClient = new FacebookOAuthClient(FacebookApplication.Current);
             oAuthClient.RedirectUri = new Uri(redirectUrl);
             var loginUri = oAuthClient.GetLoginUrl(new Dictionary<string, object> { { "state", returnUrl } });
@@ -57,7 +57,7 @@ namespace MyNokatMVC3.Controllers
             {
                 if (oauthResult.IsSuccess)
                 {
-                    string redirectUrl = "http://" + Request.Url.Host + ":" + Request.Url.Port + "/Account/OAuth/";
+                    string redirectUrl = "http://" + Request.Url.Host + "/Account/OAuth/";
                     var oAuthClient = new FacebookOAuthClient(FacebookApplication.Current);
                     oAuthClient.RedirectUri = new Uri(redirectUrl);
                     dynamic tokenResult = oAuthClient.ExchangeCodeForAccessToken(code);
