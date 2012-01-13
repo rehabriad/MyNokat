@@ -49,7 +49,7 @@ namespace MyNokatMVC3.Controllers
 
         //
         // GET: /Account/OAuth/
-        /*
+        
         public ActionResult OAuth(string code, string state)
         {
             FacebookOAuthResult oauthResult;
@@ -74,19 +74,7 @@ namespace MyNokatMVC3.Controllers
                     dynamic me = fbClient.Get("me?fields=id,name");
                     long facebookId = Convert.ToInt64(me.id);
 
-                    IUsersRepository usersRep = new UsersRepository();
-                    
-                    Users currentUser=(new Users()
-                    {
-                        AccessToken = accessToken,
-                        Expires = expiresOn,
-                        FacebookId = facebookId,
-                        Name = (string)me.name
-                    });
-                    usersRep.SaveUser(currentUser);
-
-
-                    //FormsAuthentication.SetAuthCookie(facebookId.ToString(), false);
+                    FormsAuthentication.SetAuthCookie(facebookId.ToString(), false);
 
                     // prevent open redirection attack by checking if the url is local.
                     if (Url.IsLocalUrl(state))
@@ -101,7 +89,7 @@ namespace MyNokatMVC3.Controllers
             }
 
             return RedirectToAction("Index", "Home");
-        }*/
+        }
 
 
     }
