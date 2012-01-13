@@ -24,16 +24,3 @@ D:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.Web.Mvc.xml
 D:\MyNokatMVC3\MyNokatMVC3\obj\Debug\ResolveAssemblyReference.cache
 D:\MyNokatMVC3\MyNokatMVC3\obj\Debug\MyNokatMVC3.dll
 D:\MyNokatMVC3\MyNokatMVC3\obj\Debug\MyNokatMVC3.pdb
-E:\MyNokatMVC3\MyNokatMVC3\bin\MyNokatMVC3.dll
-E:\MyNokatMVC3\MyNokatMVC3\bin\MyNokatMVC3.pdb
-E:\MyNokatMVC3\MyNokatMVC3\bin\EntityFramework.dll
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.dll
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.Web.dll
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.Web.Mvc.dll
-E:\MyNokatMVC3\MyNokatMVC3\bin\EntityFramework.xml
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.xml
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.Web.xml
-E:\MyNokatMVC3\MyNokatMVC3\bin\Facebook.Web.Mvc.xml
-E:\MyNokatMVC3\MyNokatMVC3\obj\Debug\ResolveAssemblyReference.cache
-E:\MyNokatMVC3\MyNokatMVC3\obj\Debug\MyNokatMVC3.dll
-E:\MyNokatMVC3\MyNokatMVC3\obj\Debug\MyNokatMVC3.pdb
