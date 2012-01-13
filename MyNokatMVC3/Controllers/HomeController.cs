@@ -17,7 +17,7 @@ namespace MyNokatMVC3.Controllers
 {
     public class HomeController : Controller
     {
-        [FacebookAuthorize(LoginUrl = "/Account/Login")]
+        //[FacebookAuthorize(LoginUrl = "/Account/Login")]
         public ActionResult Index()
         {
             var client = new FacebookWebClient();
