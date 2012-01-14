@@ -28,11 +28,11 @@ namespace MyNokatMVC3.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            //return View();
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            return View();
         }
         
         //

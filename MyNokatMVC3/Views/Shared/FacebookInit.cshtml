@@ -3,8 +3,8 @@
 <script>
     window.fbAsyncInit = function () {
         FB.init({ appId: '@Facebook.FacebookApplication.Current.AppId', channelURL: '@Request.Url.Scheme://@Request.Url.Authority@Url.Content("~/fbchannel.ashx")', cookie: true, xfbml: true, oauth: true });
-        FB.Event.subscribe('auth.login', function (response) { window.location.reload(); });
-        FB.Event.subscribe('auth.logout', function (response) { window.location.reload(); });
+//        FB.Event.subscribe('auth.login', function (response) { window.location.reload(); });
+//        FB.Event.subscribe('auth.logout', function (response) { window.location.reload(); });
     };
      (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
