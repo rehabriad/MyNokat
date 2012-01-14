@@ -13,7 +13,6 @@ body{
 .main
 {
     float: left;
-	margin:50px auto;
 	width:700px;
 	
 }
@@ -140,7 +139,6 @@ a.swShowPage.active{
     float: right;
     margin: 50px auto;
     padding-left: 12px;
-    width: 300px;
 }
 
 .img 
