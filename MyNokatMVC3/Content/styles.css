@@ -13,8 +13,7 @@ body{
 .main
 {
     float: left;
-	width:700px;
-	
+	width:700px;	
 }
 
 .holder{
@@ -137,7 +136,6 @@ a.swShowPage.active{
 .right_col_container {
     clear: none;
     float: right;
-    margin: 50px auto;
     padding-left: 12px;
 }
 
@@ -151,8 +149,7 @@ a.swShowPage.active{
 {
     background:url(img/up.jpg);
     width:28px;
-    height:28px;
-    
+    height:28px;   
      
 }
 
